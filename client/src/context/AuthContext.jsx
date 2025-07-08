@@ -10,15 +10,32 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      try {
-        const decoded = JSON.parse(atob(token.split(".")[1]));
-        setUser({ id: decoded.id, email: decoded.email });
-      } catch (error) {
-        localStorage.removeItem("token");
-      }
+      // Fetch user data from /api/users/me
+      fetchUserData(token);
+    } else {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
+
+  const fetchUserData = async (token) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/users/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) throw new Error("Failed to fetch user data");
+      const data = await response.json();
+      setUser({ id: data._id, email: data.email, name: data.name });
+    } catch (error) {
+      console.error("Fetch user error:", error);
+      localStorage.removeItem("token");
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const signup = async (name, email, password) => {
     try {
@@ -36,8 +53,11 @@ export const AuthProvider = ({ children }) => {
       }
 
       localStorage.setItem("token", data.token);
-      setUser(data.user);
-
+      setUser({
+        id: data.user.id,
+        email: data.user.email,
+        name: data.user.name,
+      });
       return { success: true, user: data.user };
     } catch (error) {
       console.error("Signup error:", error);
@@ -61,7 +81,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       localStorage.setItem("token", data.token);
-      setUser(data.user);
+      await fetchUserData(data.token); // Fetch full user data after login
       return { success: true, user: data.user };
     } catch (error) {
       console.error("Login error:", error);
@@ -72,7 +92,6 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    window.location.href = "/"; // Redirect to auth page
   };
 
   return (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { motion } from "framer-motion";
 
 const Points = () => {
   const { user } = useContext(AuthContext);
@@ -24,14 +25,24 @@ const Points = () => {
     if (user) fetchPoints();
   }, [user]);
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md mt-8">
-      <h3 className="text-xl font-semibold mb-4">Your Points</h3>
-      <p className="text-gray-600">You have {points} points!</p>
-      <p className="text-gray-500 text-sm">
+    <motion.div
+      className="bg-gray-800 bg-opacity-80 backdrop-blur-md p-6 rounded-xl shadow-lg border border-indigo-500/30 mt-8"
+      variants={cardVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <h3 className="text-xl font-semibold mb-4 text-white">Your Points</h3>
+      <p className="text-2xl font-bold text-indigo-400">{points} Points</p>
+      <p className="text-gray-400 text-sm mt-2">
         Earn points by adding transactions and completing challenges.
       </p>
-    </div>
+    </motion.div>
   );
 };
 
