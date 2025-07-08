@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { motion } from "framer-motion";
+import ReactMarkdown from "react-markdown";
 
 const Advisor = () => {
   const { user } = useContext(AuthContext);
@@ -100,7 +101,9 @@ const Advisor = () => {
       )}
       {advice && (
         <div className="mt-4 p-4 bg-gray-700 rounded-md">
-          <p className="text-gray-300">{advice}</p>
+          <div className="prose prose-invert text-gray-300">
+            <ReactMarkdown>{advice}</ReactMarkdown>
+          </div>
         </div>
       )}
     </motion.div>
