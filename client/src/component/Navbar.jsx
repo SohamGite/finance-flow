@@ -14,6 +14,7 @@ const Navbar = () => {
   const navLinks = [
     { label: "Home", to: "/" },
     ...(user ? [{ label: "Dashboard", to: "/dashboard" }] : []),
+    ...(user ? [{ label: "Goals", to: "/goals" }] : []),
     ...(user ? [] : [{ label: "Login/Signup", to: "/auth" }]),
   ];
 

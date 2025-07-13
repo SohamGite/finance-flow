@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
+    "axios": "^1.10.0",
     "chart.js": "^4.5.0",
     "framer-motion": "^12.23.0",
     "react": "^19.1.0",
@@ -20,6 +21,7 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.6.3",
     "react-syntax-highlighter": "^15.6.1",
+    "react-toastify": "^11.0.5",
     "react-tsparticles": "^2.12.2",
     "tailwindcss": "^4.1.10",
     "tsparticles": "^3.8.1"
