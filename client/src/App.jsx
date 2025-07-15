@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import Goals from "./pages/Goals";
+import Insights from "./pages/Insights";
 import Dashboard from "./pages/Dashboard";
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
               <Route path="/auth" element={<Auth />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/goals" element={<Goals />} />
+              <Route path="/insights" element={<Insights />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

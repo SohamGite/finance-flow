@@ -29,6 +29,7 @@ app.use("/api/categories", require("./routes/categories"));
 app.use("/api/budget", require("./routes/budget"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/goals", require("./routes/goals"));
+app.use("/api/insights", require("./routes/insights"));
 
 // Start server
 const PORT = process.env.PORT || 5000;

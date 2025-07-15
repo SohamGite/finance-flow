@@ -9,6 +9,7 @@ FinanceFlow is a personal finance management web application that helps users tr
 - **AI Financial Advisor**: Powered by the Gemini API, provides personalized budgeting suggestions based on income and expenses.
 - **Gamification**: Earn points for adding transactions to encourage consistent financial tracking.
 - **Financial Summary**: Visualize income vs. expenses with a bar chart using Chart.js.
+- **Goals**:Set and Track financial goals
 - **Custom Categories**: Users can add custom categories for transactions.
 - **Protected Routes**: Dashboard access restricted to authenticated users.
 

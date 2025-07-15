@@ -231,112 +231,122 @@ const Goals = () => {
         </div>
       </section>
 
-      {/* Goals List */}
-      <section className="py-16 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Your Goals
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {goals.map((goal, index) => (
-              <motion.div
-                key={goal._id}
-                className="bg-gray-800 bg-opacity-80 backdrop-blur-md p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border border-indigo-500/30"
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: index * 0.2 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <h4 className="text-xl font-semibold mb-2">{goal.title}</h4>
-                <p className="text-gray-300">Category: {goal.category}</p>
-                <p className="text-gray-300">Target: ₹{goal.targetAmount}</p>
-                <p className="text-gray-300">Current: ₹{goal.currentAmount}</p>
-                <p className="text-gray-300">
-                  Deadline: {new Date(goal.deadline).toLocaleDateString()}
-                </p>
-                <div className="mt-4">
-                  <Bar
-                    data={{
-                      labels: ["Progress"],
-                      datasets: [
-                        {
-                          label: "Current Amount",
-                          data: [
-                            (goal.currentAmount / goal.targetAmount) * 100,
-                          ],
-                          backgroundColor: "#36A2EB",
+      {goals.length > 0 ? (
+        <section className="py-16 relative z-10">
+          {/* Goals List */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Your Goals
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {goals.map((goal, index) => (
+                <motion.div
+                  key={goal._id}
+                  className="bg-gray-800 bg-opacity-80 backdrop-blur-md p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border border-indigo-500/30"
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: index * 0.2 }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <h4 className="text-xl font-semibold mb-2">{goal.title}</h4>
+                  <p className="text-gray-300">Category: {goal.category}</p>
+                  <p className="text-gray-300">Target: ₹{goal.targetAmount}</p>
+                  <p className="text-gray-300">
+                    Current: ₹{goal.currentAmount}
+                  </p>
+                  <p className="text-gray-300">
+                    Deadline: {new Date(goal.deadline).toLocaleDateString()}
+                  </p>
+                  <div className="mt-4">
+                    <Bar
+                      data={{
+                        labels: ["Progress"],
+                        datasets: [
+                          {
+                            label: "Current Amount",
+                            data: [
+                              (goal.currentAmount / goal.targetAmount) * 100,
+                            ],
+                            backgroundColor: "#36A2EB",
+                          },
+                          {
+                            label: "Target Amount",
+                            data: [100],
+                            backgroundColor: "#FF6384",
+                          },
+                        ],
+                      }}
+                      options={{
+                        indexAxis: "y",
+                        scales: {
+                          x: {
+                            max: 100,
+                            ticks: { callback: (value) => `${value}%` },
+                          },
                         },
-                        {
-                          label: "Target Amount",
-                          data: [100],
-                          backgroundColor: "#FF6384",
+                        plugins: {
+                          legend: { display: false },
+                          title: { display: true, text: "Goal Progress" },
                         },
-                      ],
-                    }}
-                    options={{
-                      indexAxis: "y",
-                      scales: {
-                        x: {
-                          max: 100,
-                          ticks: { callback: (value) => `${value}%` },
-                        },
-                      },
-                      plugins: {
-                        legend: { display: false },
-                        title: { display: true, text: "Goal Progress" },
-                      },
-                    }}
-                  />
-                </div>
-                <div className="mt-4">
-                  <input
-                    type="number"
-                    placeholder="Update Amount"
-                    value={updateData[goal._id] || ""}
-                    onChange={(e) =>
-                      handleUpdateChange(goal._id, e.target.value)
-                    }
-                    className="w-full p-2 rounded bg-gray-700 text-white mb-2"
-                    min="0"
-                  />
-                  <button
-                    onClick={() => handleUpdateGoal(goal._id)}
-                    className="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 transition duration-300 mr-2"
-                  >
-                    Update Progress
-                  </button>
-                  <button
-                    onClick={() => handleDeleteGoal(goal._id)}
-                    className="bg-red-500 text-white py-2 px-4 rounded-full hover:bg-red-600 transition duration-300"
-                  >
-                    Delete Goal
-                  </button>
-                </div>
-                <div className="mt-4">
-                  <p className="text-gray-300">Milestones Achieved:</p>
-                  <ul className="list-disc pl-5">
-                    {goal.milestones.map((milestone) => (
-                      <li
-                        key={milestone.percentage}
-                        className={
-                          milestone.achieved
-                            ? "text-green-400"
-                            : "text-gray-400"
-                        }
-                      >
-                        {milestone.percentage}%{" "}
-                        {milestone.achieved ? "(100 points awarded)" : ""}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            ))}
+                      }}
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <input
+                      type="number"
+                      placeholder="Update Amount"
+                      value={updateData[goal._id] || ""}
+                      onChange={(e) =>
+                        handleUpdateChange(goal._id, e.target.value)
+                      }
+                      className="w-full p-2 rounded bg-gray-700 text-white mb-2"
+                      min="0"
+                    />
+                    <button
+                      onClick={() => handleUpdateGoal(goal._id)}
+                      className="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 transition duration-300 mr-2"
+                    >
+                      Update Progress
+                    </button>
+                    <button
+                      onClick={() => handleDeleteGoal(goal._id)}
+                      className="bg-red-500 text-white py-2 px-4 rounded-full hover:bg-red-600 transition duration-300"
+                    >
+                      Delete Goal
+                    </button>
+                  </div>
+                  <div className="mt-4">
+                    <p className="text-gray-300">Milestones Achieved:</p>
+                    <ul className="list-disc pl-5">
+                      {goal.milestones.map((milestone) => (
+                        <li
+                          key={milestone.percentage}
+                          className={
+                            milestone.achieved
+                              ? "text-green-400"
+                              : "text-gray-400"
+                          }
+                        >
+                          {milestone.percentage}%{" "}
+                          {milestone.achieved ? "(100 points awarded)" : ""}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
+        </section>
+      ) : (
+        <div className="text-center pb-1">
+          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            No Goals found. Start by creating one!
+          </h3>
         </div>
-      </section>
+      )}
     </div>
   );
 };
