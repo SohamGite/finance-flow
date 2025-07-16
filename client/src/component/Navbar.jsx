@@ -16,6 +16,7 @@ const Navbar = () => {
     ...(user ? [{ label: "Dashboard", to: "/dashboard" }] : []),
     ...(user ? [{ label: "Goals", to: "/goals" }] : []),
     ...(user ? [{ label: "Insights", to: "/insights" }] : []),
+    ...(user ? [{ label: "Calculators", to: "/calculators" }] : []),
     ...(user ? [] : [{ label: "Login/Signup", to: "/auth" }]),
   ];
 

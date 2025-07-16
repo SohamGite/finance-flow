@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Goals from "./pages/Goals";
 import Insights from "./pages/Insights";
 import Dashboard from "./pages/Dashboard";
+import Calculators from "./pages/Calculators";
 
 const App = () => {
   return (
@@ -23,6 +24,8 @@ const App = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/goals" element={<Goals />} />
               <Route path="/insights" element={<Insights />} />
+              <Route path="/calculators" element={<Calculators />} />
+              {/* Catch-all route for 404 Not Found */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
